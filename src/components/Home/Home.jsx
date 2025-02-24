@@ -26,11 +26,11 @@ function Home() {
       </div>
       </Link>
 
-      <Link to={"/pdf-to-speech"}>
+      <Link to={"/file-encryptor"}>
       <div className="cursor-pointer p-3 text-white border-gray-100
                  rounded-md border-2 text-center hover:opacity-75">
         <BiLogoUnity className="text-white text-5xl sm:text-6xl m-3" />
-        <p className="font-bold text">PDF to Text</p>
+        <p className="font-bold text">File Encryptor</p>
       </div>
       </Link>
       </div>

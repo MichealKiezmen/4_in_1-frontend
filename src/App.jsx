@@ -2,6 +2,7 @@ import { BrowserRouter , Routes, Route } from 'react-router-dom'
 import Home from './components/Home/Home.jsx'
 import PDFHome from './components/PDF_to_Speech/PDFHome.jsx'
 import BotHome from './components/Bot_Automation/BotHome.jsx'
+import EncryptHome from './components/File_Encryptor/EncryptHome.jsx'
 
 
 function App() {
@@ -21,6 +22,10 @@ function App() {
 
 {/* AUTOMATION BY BOT */}
       <Route path='/bot-automation' element={<BotHome />}>
+        {/* <Route path="/upload-video" element={} /> */}
+      </Route>
+
+      <Route path='/file-encryptor' element={<EncryptHome />}>
         {/* <Route path="/upload-video" element={} /> */}
       </Route>
 
