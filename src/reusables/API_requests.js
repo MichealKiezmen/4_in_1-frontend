@@ -1,4 +1,3 @@
-
 export const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 export const makeGetRequests = async (url, token) => {
@@ -19,20 +18,32 @@ export const makeGetRequests = async (url, token) => {
 }
 
 
-export const makePostRequests = async (url, token, data) => {
+export const makePostRequests = async (url, token, data, fileUpload) => {
 
-    const response = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
+    const headers = fileUpload ? {
+            "Authorization": `Bearer ${token}`
+        } :
+        {
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Authorization": `Bearer ${token}`
         }
+   try {
+    const response = await fetch(url, {
+        method: "POST",
+        body: fileUpload ? data : JSON.stringify(data),
+        headers
     })
 
     if (response.ok) {
         return await response.json()
+    }else{
+        console.log(response)
     }
+   } catch (error) {
+    console.log("error", error)
+    throw error
+   }
+
 
 }
