@@ -44,17 +44,17 @@ function Encrypt() {
 
   return (
     <div className="p-3">
-      <h3 className="text-4xl text-center font-bold my-4">Encrypt Mode</h3>
+      <h3 className="text-xl sm:text-4xl text-center font-bold my-4">Encryption Mode</h3>
 
       <form onSubmit={handleEncryption} encType="multipart/form-data">
-        <div className="flex justify-between items-center px-4 my-10">
+        <div className="flex justify-between items-center px-2.5 sm:px-4 my-10">
           <div>
             <label htmlFor="file-type" className="cursor-pointer">
               <p className="text-sm text-center font-bold mb-2">Select file</p>
               <div className="relative">
-                <IoDocumentsSharp className="text-[180px]" />
+                <IoDocumentsSharp className="text-6xl sm:text-8xl lg:text-[180px]" />
                 <p className="absolute z-[2] bottom-2 left-[11%] text-white
-          font-bold text-2xl">{fileType?.toUpperCase()}</p>
+          font-bold md:text-2xl">{fileType?.toUpperCase()}</p>
               </div>
               <p>{fileName}</p>
             </label>
@@ -62,10 +62,10 @@ function Encrypt() {
           </div>
 
           <div>
-            <div className="flex flex-col items-center">
-              <label htmlFor="file-extension" className="text-sm text-center font-bold mb-2 cursor-pointer">
+            <div className="flex flex-col items-center justify-center">
+              <label htmlFor="file-extension" className="text-sm text-center font-bold sm:mb-2 cursor-pointer">
                 Select Mode</label>
-              <select className="cursor-pointer py-2 px-5 text-white bg-themed_blue font-semibold
+              <select className="cursor-pointer p-1 sm:px-5 text-white bg-themed_blue font-semibold
         border-2 rounded-xl shadow-md"
                 onChange={handleChange} value={fileExtension}
                 name="file-extension" id="file-extension">
@@ -75,12 +75,12 @@ function Encrypt() {
                 <option value="doc">.doc</option>
               </select>
             </div>
-            <FaLongArrowAltRight className="text-[100px]" />
+            <FaLongArrowAltRight className="mx-auto text-4xl lg:text-[100px]" />
           </div>
 
           <div className="flex justify-center">
-            <button className="py-3 px-8 text-white bg-themed_blue font-semibold
-        border-2 rounded-2xl shadow-md shadow-themed_blue hover:shadow-lg">
+            <button className="py-1 px-2.5 sm:py-2 lg:py-3 sm:px-4 lg:px-8 text-white bg-themed_blue font-semibold
+             border-[0.5px] sm:border-2 rounded-2xl shadow-md shadow-themed_blue hover:shadow-lg">
               Encrypt
             </button>
           </div>
@@ -88,7 +88,7 @@ function Encrypt() {
         </div>
       </form>
 
-      <div className="text-themed_black">
+      <div className="text-themed_black pt-10">
       {serverData ?
       <div>
         <p>Your file was successfully encrypted with key:
