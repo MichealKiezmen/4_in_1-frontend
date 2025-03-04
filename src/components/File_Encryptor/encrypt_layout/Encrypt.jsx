@@ -43,7 +43,7 @@ function Encrypt() {
 
 
   return (
-    <div className="p-3">
+    <div className="p-3 text-themed_blue ">
       <h3 className="text-xl sm:text-4xl text-center font-bold my-4">Encryption Mode</h3>
 
       <form onSubmit={handleEncryption} encType="multipart/form-data">
