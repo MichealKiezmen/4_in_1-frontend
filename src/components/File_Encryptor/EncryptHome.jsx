@@ -1,6 +1,5 @@
 import { useGoogleLogin } from '@react-oauth/google'
 import { makeGetRequests, makePostRequests, SERVER_URL } from '../../reusables/API_requests'
-import EncryptHeader from './EncryptHeader'
 import EncryptorHerosection from './EncryptorHerosection'
 import EncryptorHow from './EncryptorHow'
 import EncryptTips from './EncryptTips'
@@ -50,8 +49,7 @@ function EncryptHome() {
 
   return (
     <div className='bg-themed_teal text-white w-full h-full relative'>
-    <div className='p-4 md:h-[85vh]'>
-    <EncryptHeader />
+    <div className='p-4 md:h-[75vh]'>
     <EncryptorHerosection />
     </div>
     <EncryptorHow />

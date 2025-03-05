@@ -3,6 +3,8 @@ import Home from './components/Home/Home.jsx'
 import PDFHome from './components/PDF_to_Speech/PDFHome.jsx'
 import BotHome from './components/Bot_Automation/BotHome.jsx'
 import EncryptHome from './components/File_Encryptor/EncryptHome.jsx'
+import EncryptCollection from './components/File_Encryptor/EncryptCollection.jsx'
+import EncryptHeader from './components/File_Encryptor/EncryptHeader.jsx'
 
 
 function App() {
@@ -25,8 +27,9 @@ function App() {
         {/* <Route path="/upload-video" element={} /> */}
       </Route>
 
-      <Route path='/file-encryptor' element={<EncryptHome />}>
-        {/* <Route path="/upload-video" element={} /> */}
+      <Route path='/file-encryptor' element={<EncryptHeader />}>
+        <Route path="/file-encryptor" index element={<EncryptHome />} />
+        <Route path="/file-encryptor/collections"  element={<EncryptCollection />} />
       </Route>
 
     </Routes>
