@@ -31,16 +31,23 @@ function EncryptCollection() {
 
     async function fetchData(){
             const response = await makeGetRequests(`${SERVER_URL}/api/encrypt/${loggedInUser?.id}/`,authTokens?.access_token)
+
+            if(response?.message === "Authorization token is missing" || response?.message === "Invalid token"){
+                dispatch(logUserOut())
+                navigate("/file-encryptor")
+                return
+            }
+
+
             if(response?.message === "Token has expired"){
                 const retry = await makeGetRequests(`${SERVER_URL}/api/refresh/`,authTokens?.refresh_token)
                 if(retry?.message === "Token has expired"){
                     dispatch(logUserOut())
+                    navigate("/file-encryptor")
                 }else{
                     await dispatch(updateToken(retry?.data))
-                    navigate("/file-encryptor")
-                    return
+                    fetchData()
                 }
-
             }else{
                 setFilteredData(response?.data || [])
             }
