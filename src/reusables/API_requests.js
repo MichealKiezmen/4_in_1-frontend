@@ -38,7 +38,7 @@ export const makePostRequests = async (url, token, data, fileUpload) => {
     if (response.ok) {
         return await response.json()
     }else{
-        console.log(response)
+        return await response.json()
     }
    } catch (error) {
     console.log("error", error)

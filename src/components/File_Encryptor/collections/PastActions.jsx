@@ -8,7 +8,7 @@ import { BsFiletypeTxt } from "react-icons/bs"
 import { HiOutlineDocumentText } from "react-icons/hi"
 import { CiFileOn } from "react-icons/ci"
 
-function PastActions({data}) {
+function PastActions({data, value}) {
 
     const [keyOpen, setKeyOpen] = useState(Array.from(data, () => false))
 
@@ -39,8 +39,8 @@ function PastActions({data}) {
 
 
     return (
-        <>
-        {data.length > 0 &&
+        <div className="bg-themed_teal text-white py-5">
+        {data.length > 0 ?
 
             <div className="px-4 lg:px-10 overflow-x-scroll md:overflow-x-hidden">
 
@@ -104,8 +104,26 @@ function PastActions({data}) {
 
 
         </div>
+
+        :
+        <div className="text-center">
+        {value.length > 0 && data.length === 0 ?
+        <div>
+        <h3 className="font-bold text-2xl">No Search Results</h3>
+            <p>We couldn&apos;t find any files matching your search.
+            Try different keywords or clear your search to see all your encrypted files.</p>
+        </div>
+        :
+        <div>
+        <h3 className="font-bold text-2xl">No Files Found</h3>
+            <p>You haven&apos;t encrypted any files yet. Get started by returning to the
+            encryption page and securing your first file.</p>
+        </div>
+        }
+
+        </div>
          }
-         </>
+         </div>
     )
 }
 

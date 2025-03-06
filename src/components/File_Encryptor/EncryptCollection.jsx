@@ -2,10 +2,18 @@ import { useEffect, useState } from "react"
 import ColMainSection from "./collections/ColMainSection"
 import PastActions from "./collections/PastActions"
 import { makeGetRequests, SERVER_URL } from "../../reusables/API_requests"
+import { useDispatch, useSelector } from "react-redux"
+import { getUserData, getTokens, updateToken, logUserOut } from "../../redux/Slices/userSlice"
+import { useNavigate } from "react-router-dom"
 
 function EncryptCollection() {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [inputValue, setInputValue] = useState("")
     const [filteredData, setFilteredData] = useState([])
+
+    const loggedInUser = useSelector(getUserData)
+    const authTokens = useSelector(getTokens)
 
 
     const handleChange = (e) => {
@@ -22,16 +30,24 @@ function EncryptCollection() {
     }
 
     async function fetchData(){
-            const userID = 1
-            const token = "12345"
-            const response = await makeGetRequests(`${SERVER_URL}/api/encrypt/${userID}/`,token)
-            setFilteredData(response?.data)
+            const response = await makeGetRequests(`${SERVER_URL}/api/encrypt/${loggedInUser?.id}/`,authTokens?.access_token)
+            if(response?.message === "Token has expired"){
+                const retry = await makeGetRequests(`${SERVER_URL}/api/refresh/`,authTokens?.refresh_token)
+                if(retry?.message === "Token has expired"){
+                    dispatch(logUserOut())
+                }else{
+                    await dispatch(updateToken(retry?.data))
+                    navigate("/file-encryptor")
+                    return
+                }
+
+            }else{
+                setFilteredData(response?.data || [])
+            }
+
     }
 
 
-useEffect(() => {
-    fetchData()
-},[])
 
 
 useEffect(() => {
@@ -42,9 +58,9 @@ useEffect(() => {
 },[inputValue])
 
   return (
-    <div>
+    <div className={`h-screen`}>
     <ColMainSection searchValue={inputValue} handleChange={handleChange}  />
-    <PastActions data={filteredData} />
+    <PastActions data={filteredData} value={inputValue} />
     </div>
   )
 }
