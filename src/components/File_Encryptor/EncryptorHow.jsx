@@ -3,7 +3,10 @@ import Encrypt from "./encrypt_layout/Encrypt"
 import Decrypt from "./decrypt_layout/Decrypt"
 import { useState } from "react"
 import Teach from "../../layout/Teach"
-import { FaUnlock, FaLock } from "react-icons/fa"
+
+
+import img1 from "../../assets/images/img1.webp"
+import img9 from "../../assets/images/img9.webp"
 
 function EncryptorHow() {
 
@@ -23,12 +26,12 @@ function EncryptorHow() {
     <div className="bg-white text-themed_blue my-5 p-4">
         <h3 className="text-4xl font-bold text-center">How it Works</h3>
 
-        <div className="flex flex-col md:flex-row justify-center my-8 mx-3 md:space-x-10">
+        <div className="flex flex-col md:flex-row justify-center my-12 mx-3 md:space-x-10">
 
-        <div className="md:w-[30%] ">
+        <div className="transition hover:scale-110 md:w-[30%] ">
         <Teach
         toggleModal={toggleEncryptModal}
-        buttonIcon={<FaLock className="text-[100px] sm:text-[150px]" />}
+        img={img9}
         >
         <p className="font-bold text-xl text-center my-4">Encrypt</p>
            <p className="italic text-center text-lg mb-4">Encrypting Files is Simple and Secure</p>
@@ -42,10 +45,10 @@ function EncryptorHow() {
         </Teach>
         </div>
 
-        <div className="md:w-[30%] ">
+        <div className="transition hover:scale-110 md:w-[30%] ">
         <Teach
         toggleModal={toggleDecryptModal}
-        buttonIcon={<FaUnlock className="text-[100px] sm:text-[150px]" />}
+        img={img1}
         >
         <p className="font-bold text-xl text-center my-4">Decrypt</p>
            <p className="italic text-center text-lg mb-4">Access Your Protected Files When You Need Them</p>
