@@ -27,7 +27,9 @@ function EncryptorHow() {
 
         <div className="flex flex-col md:flex-row justify-center my-14 mx-3 md:space-x-10">
 
-        <div className="transition hover:scale-110 md:w-[30%] lg:mr-[80px]">
+        <div
+        onClick={toggleEncryptModal}
+        className="cursor-pointer transition hover:scale-110 md:w-[30%] lg:mr-[80px]">
         <Teach
         toggleModal={toggleEncryptModal}
         >
@@ -51,7 +53,9 @@ function EncryptorHow() {
         </Teach>
         </div>
 
-        <div className="transition hover:scale-110 md:w-[30%] ">
+        <div
+        onClick={toggleDecryptModal}
+         className="cursor-pointer transition hover:scale-110 md:w-[30%] ">
         <Teach
         toggleModal={toggleDecryptModal}
         >
