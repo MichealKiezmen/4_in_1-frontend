@@ -18,7 +18,7 @@ function Encrypt() {
 
   const [error, setError] = useState("")
 
-  console.log(error)
+
 
   const handleChange = (e) => {
     setError("")
