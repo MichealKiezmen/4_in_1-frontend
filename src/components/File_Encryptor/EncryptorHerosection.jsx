@@ -70,10 +70,10 @@ function EncryptorHerosection() {
 
   return (
     <div className="my-10 md:my-[50px] flex flex-col md:flex-row sm:px-4">
-        <div className="md:w-[60%] order-2 md:order-1">
+        <div className="md:w-[50%] order-2 md:order-1">
 
         <motion.h3
-        className="text-4xl italic font-bold"
+        className="text-3xl italic font-bold"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.2 }}
@@ -89,7 +89,7 @@ function EncryptorHerosection() {
   <p className="my-5 text-xl">Powerful end-to-end encryption that keeps your
   sensitive data protected from prying eyes. </p>
 
-  <p className="mb-4">SecureVault provides military-grade encryption for your most important
+  <p className="mb-4">Safe Encrypt provides military-grade encryption for your most important
   files with a simple, intuitive interface. No technical expertise required.
   <br/>
   Encrypt and decrypt your files with just a few clicks, ensuring your private
@@ -98,20 +98,20 @@ function EncryptorHerosection() {
 
     <div className="py-4">
               <button onClick={toggleEncryptModal}
-              className="transition duration-500 hover:translate-x-4 py-3 lg:py-3 px-8 bg-white text-themed_blue font-semibold
-              border-[1px] sm:border-2 rounded-3xl shadow-lg shadow-themed_blue hover:shadow-lg">
+              className="transition duration-500 hover:translate-x-4 py-3 lg:py-3 px-8 bg-white text-themed_teal font-semibold
+              border-[1px] sm:border-2 rounded-md shadow-lg shadow-themed_teal hover:shadow-lg">
                 Start Encrypting Now
               </button>
             </div>
         </div>
 
-      <div className="flex justify-center items-center mb-10 md:w-[40%] order-1 md:order-2">
+      <div className="flex justify-center items-center mb-10 md:w-[50%] order-1 md:order-2">
         {/* Image carousel */}
 
     <div className="">
-        <div className="animate-slideindown h-[350px] w-[300px] rounded-xl">
+        <div className="h-[250px] w-[250px] lg:h-[350px] lg:w-[350px] p-1 bg-white rounded-full">
             <img src={images[imageIndex]}
-            className="transition duration-500 hover:scale-110 h-full w-full rounded-xl"
+            className="transition duration-500 hover:scale-110 h-full w-full rounded-full"
             alt="..." />
         </div>
     </div>

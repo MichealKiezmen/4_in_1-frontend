@@ -1,20 +1,12 @@
 
-function Teach({toggleModal, buttonIcon, children, img}) {
+function Teach({toggleModal, children}) {
   return (
     <div className="mb-14">
-    <div className="bg-themed_blue text-white flex justify-center rounded-t-lg">
-               <button onClick={toggleModal} className="hover:opacity-75">
-               <div className="h-[250px] md:h-full w-[250px] md:w-full">
-                <img className="h-full w-full rounded-t-lg" src={img} alt="..." />
-               </div>
-               {buttonIcon}
-               </button>
-               </div>
-
-               <div className="md:h-[550px] px-3 py-8 border-[1px] rounded-b-lg border-themed_blue">
+               <div className="relative md:h-[580px] px-3 py-12 border-[1px] rounded-lg shadow-lg">
                 {children}
-                <button onClick={toggleModal} className="bg-themed_blue text-white py-1
-                px-4 rounded-2xl mt-4 border-[1px] sm:border-2 shadow-md shadow-themed_blue hover:shadow-lg">
+                <button onClick={toggleModal} className="bg-themed_teal text-white py-1
+                absolute bottom-3 md:bottom-6 left-4
+                px-4 rounded-md sm:border-2 shadow-md hover:shadow-themed_teal">
                 Try now</button>
                 </div>
     </div>

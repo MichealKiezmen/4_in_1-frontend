@@ -2,7 +2,8 @@ export const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 export const makeGetRequests = async (url, token) => {
 
-    const response = await fetch(url, {
+    try {
+        const response = await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -11,8 +12,14 @@ export const makeGetRequests = async (url, token) => {
         }
     })
 
-    if (response.ok) {
-        return await response.json()
+        if (response.ok) {
+            return await response.json()
+        }else{
+            return await response.json()
+        }
+    } catch (error) {
+        console.log("Error:", error)
+        return error
     }
 
 }

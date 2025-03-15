@@ -2,7 +2,7 @@ import { IoMdClose } from "react-icons/io";
 
 function PopUp({children, closePopUp}) {
   return (
-    <div className="fixed top-0 left-0 flex justify-center items-center bg-[#000]
+    <div className="fixed z-[500] top-0 left-0 flex justify-center items-center bg-[#000]
       h-full w-full">
         <div className="relative mx-3 w-full sm:w-2/4 h-[85%] bg-white rounded-lg">
         <div

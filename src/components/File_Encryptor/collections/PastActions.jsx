@@ -39,16 +39,16 @@ function PastActions({data, value}) {
 
 
     return (
-        <div className="bg-themed_teal text-white py-5">
+        <div className="text-themed_teal bg-white py-20">
         {data.length > 0 ?
 
-            <div className="px-4 lg:px-10 overflow-x-scroll md:overflow-x-hidden">
-
+            <div className="p-4 lg:px-20 flex flex-col justify-center  overflow-x-scroll lg:overflow-x-hidden">
+            <p className="font-bold text-2xl my-5">File History</p>
             <table>
-                <tr>
-                    <th>FILES</th>
+                <tr className="bg-themed_teal text-white">
+                    <th className="py-3">FILES</th>
                     <th>ENCRYPTION KEY</th>
-                    <th>DOWNLOAD</th>
+                    <th className="pr-3">DOWNLOAD</th>
                 </tr>
 
                 {data.map((item, idx) => {
@@ -70,7 +70,7 @@ function PastActions({data, value}) {
                                 <div className="flex mx-12">
                                     {keyOpen[idx] ?
                                         <>
-                                            <p className="bg-gray-500 rounded-lg px-3 py-1">{item?.encryption_key}</p>
+                                            <p className="bg-[#F3F5FC] rounded-lg px-3 py-1">{item?.encryption_key}</p>
                                             <IoIosEye className="cursor-pointer text-3xl mx-2"
                                                 onClick={() => {
                                                     toggleEye(idx)
@@ -78,7 +78,7 @@ function PastActions({data, value}) {
                                         </>
                                         :
                                         <>
-                                            <p className="w-[400px] bg-gray-500 rounded-lg px-3 py-1">{'*'.repeat(item?.encryption_key?.length)}</p>
+                                            <p className="w-[400px] bg-[#F3F5FC] rounded-lg px-3 py-1">{'*'.repeat(item?.encryption_key?.length)}</p>
                                             <IoIosEyeOff className="cursor-pointer text-3xl mx-2"
                                                 onClick={() => {
                                                     toggleEye(idx)
@@ -91,7 +91,7 @@ function PastActions({data, value}) {
 
                             <td className="py-3">
                                 <Link to={item?.file_url} className="flex justify-center">
-                                    <MdDownloadForOffline className="text-4xl text-white" />
+                                    <MdDownloadForOffline className="text-4xl" />
                                 </Link>
                             </td>
 

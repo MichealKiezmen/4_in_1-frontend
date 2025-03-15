@@ -3,21 +3,31 @@ import { FaLongArrowAltRight } from "react-icons/fa"
 import { IoDocumentsSharp } from "react-icons/io5"
 import { makePostRequests, SERVER_URL } from "../../../reusables/API_requests"
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { getTokens, getUserData } from "../../../redux/Slices/userSlice"
 
 function Encrypt() {
-  const userID = 1
+  const userID = useSelector(getUserData)
+  const token = useSelector(getTokens)
   const [selectedFile, setSelectedFile] = useState("")
-  const [fileExtension, setFileExtension] = useState("")
+  const [fileExtension, setFileExtension] = useState("pdf")
   const [fileType, setFileType] = useState("")
   const [fileName, setFileName] = useState("")
   const [serverData, setServerData]  = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const [error, setError] = useState("")
+
+  console.log(error)
 
   const handleChange = (e) => {
+    setError("")
     const { value } = e.target
     setFileExtension(value)
   }
 
   const handleFileChange = (e) => {
+    setError("")
     const fileProcessed = e.target.files[0]
     setSelectedFile(fileProcessed)
     const file_name = fileProcessed?.name
@@ -29,16 +39,21 @@ function Encrypt() {
 
   const handleEncryption = async (e) => {
     e.preventDefault()
+    if(!selectedFile || !fileExtension) {
+      setError("Please select a file.")
+      return
+    }
+
+    setLoading(true)
     const formData = new FormData();
     formData.append("document", selectedFile)
     formData.append("file_extension", fileExtension)
 
-    const token = "12345"
-
-    const response = await makePostRequests(`${SERVER_URL}/api/encrypt/${userID}/`,token, formData,true)
+    const response = await makePostRequests(`${SERVER_URL}/api/encrypt/${userID?.id}/`,token?.access_token, formData,true)
     if(response?.file_url){
       setServerData(response)
     }
+    setLoading(false)
   }
 
 
@@ -58,7 +73,8 @@ function Encrypt() {
               </div>
               <p>{fileName}</p>
             </label>
-            <input type="file" onChange={handleFileChange} className="hidden" id="file-type" />
+            <input type="file" onChange={handleFileChange}
+             className="hidden" id="file-type" />
           </div>
 
           <div>
@@ -81,11 +97,20 @@ function Encrypt() {
           <div className="flex justify-center">
             <button className="py-1 px-2.5 sm:py-2 lg:py-3 sm:px-4 lg:px-8 text-white bg-themed_blue font-semibold
              border-[0.5px] sm:border-2 rounded-2xl shadow-md shadow-themed_blue hover:shadow-lg">
-              Encrypt
+
+              {loading ?
+             <div className="flex justify-center w-20">
+              <div className="animate-spin h-4 w-4 rounded-full border-t-4 text-white" />
+             </div>
+             :
+             "Encrypt"
+             }
             </button>
           </div>
 
         </div>
+
+        <p className="text-center text-red-500">{error}</p>
       </form>
 
       <div className="text-themed_black pt-10">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import ColMainSection from "./collections/ColMainSection"
 import PastActions from "./collections/PastActions"
-import { makeGetRequests, SERVER_URL } from "../../reusables/API_requests"
+import { makeGetRequests, makePostRequests, SERVER_URL } from "../../reusables/API_requests"
 import { useDispatch, useSelector } from "react-redux"
 import { getUserData, getTokens, updateToken, logUserOut } from "../../redux/Slices/userSlice"
 import { useNavigate } from "react-router-dom"
@@ -40,7 +40,7 @@ function EncryptCollection() {
 
 
             if(response?.message === "Token has expired"){
-                const retry = await makeGetRequests(`${SERVER_URL}/api/refresh/`,authTokens?.refresh_token)
+                const retry = await makePostRequests(`${SERVER_URL}/api/refresh/`,authTokens?.refresh_token)
                 if(retry?.message === "Token has expired"){
                     dispatch(logUserOut())
                     navigate("/file-encryptor")
@@ -49,7 +49,7 @@ function EncryptCollection() {
                     fetchData()
                 }
             }else{
-                setFilteredData(response?.data || [])
+                setFilteredData(Array.isArray(response?.data) ? response?.data.reverse() : [])
             }
 
     }
@@ -63,6 +63,7 @@ useEffect(() => {
     }
 
 },[inputValue])
+
 
   return (
     <div className={`h-screen`}>

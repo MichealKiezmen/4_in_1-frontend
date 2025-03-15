@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { BsFillEnvelopeSlashFill } from "react-icons/bs"
 import { MdMenu } from "react-icons/md"
 import { Link, Outlet, useNavigate } from "react-router-dom"
 import PopUp from '../../layout/PopUp'
@@ -10,7 +9,7 @@ import { makeGetRequests, makePostRequests, SERVER_URL } from '../../reusables/A
 import { useDispatch, useSelector } from 'react-redux'
 import { getTokens, logUserOut, updateToken, updateUser } from '../../redux/Slices/userSlice'
 
-
+import logo from "../../assets/images/logo1.png"
 
 function EncryptHeader() {
 
@@ -96,27 +95,28 @@ useEffect(() => {
   return (
     <div className='bg-themed_teal text-white w-full h-full relative '>
     <div className="flex justify-between flex-wrap p-4">
-        <div>
+        <div className="ml-3 md:ml-[80px] py-4">
             <Link to="/file-encryptor">
-                <BsFillEnvelopeSlashFill className="text-white text-5xl" />
+                <img src={logo} className="h-10" alt="logo" />
             </Link>
         </div>
 
         <div>
-            <button onClick={toggleMenu} className="md:hidden text-white text-3xl my-2.5"><MdMenu /></button>
+            <button onClick={toggleMenu} className="md:hidden text-white text-3xl my-4"><MdMenu /></button>
         </div>
 
         <div className={`${showMenu ? "block" : "hidden" } sm:block fixed left-0 top-0 bg-themed_blue sm:bg-transparent z-[10] sm:relative
-         w-[75%] sm:w-auto h-full sm:h-auto py-2.5 sm:px-2.5`}>
-            <ul className="flex flex-col sm:flex-row space-x-3 sm:space-x-0 space-y-8 sm:space-y-0">
+         w-[75%] sm:w-auto h-full sm:h-auto py-4 sm:px-2.5`}>
+            <ul className="flex flex-col mr-5 md:mr-[90px] lg:mr-[120px] px-4 sm:py-0
+            sm:flex-row sm:text-sm space-x-3 sm:space-x-0 space-y-8 sm:space-y-0">
 
             {authTokens ?
              <>
              <li onClick={toggleMenu}><Link to="/file-encryptor/collections" className="px-4 py-2">Collections</Link></li>
-             <li onClick={logOut}><Link to="" className="text-themed_black bg-white px-4 py-2 rounded-2xl">Log out</Link></li>
+             <li onClick={logOut}><Link to="" className="text-themed_black bg-white px-4 py-2 rounded-md">Log out</Link></li>
              </>
             :
-            <li onClick={toggleLoginPopUp}><Link to="" className="bg-themed_black text-white px-4 py-2 rounded-2xl">Log in</Link></li>
+            <li onClick={toggleLoginPopUp}><Link to="" className="bg-themed_black text-white px-4 py-2 rounded-md">Log in</Link></li>
             }
 
 

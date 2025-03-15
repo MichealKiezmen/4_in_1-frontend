@@ -3,21 +3,29 @@ import { FaLongArrowAltLeft } from "react-icons/fa"
 import { IoDocumentsSharp } from "react-icons/io5"
 import { makePostRequests, SERVER_URL } from "../../../reusables/API_requests"
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { getTokens } from "../../../redux/Slices/userSlice"
 
 function Decrypt() {
-
+  const token = useSelector(getTokens)
   const [selectedFile, setSelectedFile] = useState("")
   const [fileType, setFileType] = useState("")
   const [fileName, setFileName] = useState("")
   const [inputKey, setInputKey] = useState("")
   const [serverData, setServerData]  = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const [error, setError] = useState("")
+
 
   const handleChange = (e) => {
+    setError("")
     const key = e.target.value
     setInputKey(key)
   }
 
   const handleFileChange = (e) => {
+    setError("")
     const fileProcessed = e.target.files[0]
     setSelectedFile(fileProcessed)
     const file_name = fileProcessed?.name
@@ -29,20 +37,27 @@ function Decrypt() {
 
   const handleEncryption = async (e) => {
     e.preventDefault()
+    if(!selectedFile || !inputKey) {
+      setError("Please select a file.")
+      return
+    }
+
+
+    setLoading(true)
     const formData = new FormData();
     formData.append("document", selectedFile)
     formData.append("key", inputKey)
-    const token = "12345"
 
-    const response = await makePostRequests(`${SERVER_URL}/api/decrypt/`,token, formData,true)
+    const response = await makePostRequests(`${SERVER_URL}/api/decrypt/`,token?.access_token, formData,true)
     if(response?.file_url){
       setServerData(response)
     }
+    setLoading(false)
   }
 
 
   return (
-    <div className="p-3">
+    <div className="p-3 text-themed_blue">
       <h3 className="text-xl sm:text-4xl text-center font-bold my-4">Decryption Mode</h3>
 
       <form onSubmit={handleEncryption} encType="multipart/form-data">
@@ -51,15 +66,24 @@ function Decrypt() {
             <p className="text-sm font-bold">DECRYPTION KEY</p>
             <input type="text" value={inputKey} onChange={handleChange}
             className="w-full px-3 py-1 border-[1px] rounded-md text-themed_black
-            focus:border-themed_blue outline-themed_blue border-themed_blue" />
+            focus:border-themed_blue outline-themed_blue border-themed_blue"
+            required
+             />
             </div>
+
         </div>
 
         <div className="flex justify-between items-center px-2.5 sm:px-4 mb-5">
         <div className="flex justify-center w-1/4">
             <button className="py-1 px-2.5 lg:py-3 lg:px-8 text-white bg-themed_blue font-semibold
              border-[0.5px] sm:border-2 rounded-2xl shadow-md shadow-themed_blue hover:shadow-lg">
-              Decrypt
+             {loading ?
+             <div className="flex justify-center w-20">
+              <div className="animate-spin h-4 w-4 rounded-full border-t-4 text-white" />
+             </div>
+             :
+             "Decrypt"
+             }
             </button>
           </div>
 
@@ -79,21 +103,21 @@ function Decrypt() {
               </div>
               <p>{fileName}</p>
             </label>
-            <input type="file" onChange={handleFileChange} className="hidden" id="file-type" />
+            <input type="file" onChange={handleFileChange}
+            className="hidden" id="file-type" />
           </div>
 
         </div>
 
 
-
+        <p className="text-center text-red-500">{error}</p>
       </form>
 
 
-      <div className="text-themed_black pt-10">
+      <div className="text-themed_black">
       {serverData ?
       <div>
-        <p>Your file was successfully decrypted with key:
-         <span className="font-bold text-themed_blue m-2">{inputKey}</span>.
+        <p>Your file was successfully decrypted:
          <br />
           Download the file <Link className="text-purple-600 underline italic" to={serverData?.file_url}>here</Link>
         </p>
