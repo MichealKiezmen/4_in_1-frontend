@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom"
-import { MdDownloadForOffline } from "react-icons/md"
-import { IoIosEye, IoIosEyeOff } from "react-icons/io"
 import { useState } from "react"
 import { LuFileJson2 } from "react-icons/lu"
 import { FaRegFilePdf } from "react-icons/fa"
 import { BsFiletypeTxt } from "react-icons/bs"
 import { HiOutlineDocumentText } from "react-icons/hi"
 import { CiFileOn } from "react-icons/ci"
+import FileHistory from "./FileHistory"
+import MobileFileHistory from "./MobileFileHistory"
 
 function PastActions({data, value}) {
 
@@ -44,63 +43,24 @@ function PastActions({data, value}) {
 
             <div className="p-4 lg:px-20 flex flex-col justify-center  overflow-x-scroll lg:overflow-x-hidden">
             <p className="font-bold text-2xl my-5">File History</p>
-            <table>
-                <tr className="bg-themed_teal text-white">
-                    <th className="py-3">FILES</th>
-                    <th>ENCRYPTION KEY</th>
-                    <th className="pr-3">DOWNLOAD</th>
-                </tr>
 
-                {data.map((item, idx) => {
-                    return (
-                        <tr key={idx} className="">
+            <div className="hidden md:block">
+                <FileHistory 
+                data={data}
+                iconToDisplay={iconToDisplay}
+                keyOpen={keyOpen}
+                toggleEye={toggleEye}
+                />
+            </div>
 
-                            <td className="py-3">
-                            <div className="flex">
-                            {iconToDisplay(item?.file_extension)}
-                            <div className="mx-2 font-semibold">
-                            <p>{item?.file_name}</p>
-                            <p className="text-sm">{item?.file_extension}</p>
-                            </div>
-                            </div>
-
-                            </td>
-
-                            <td className="py-3">
-                                <div className="flex mx-12">
-                                    {keyOpen[idx] ?
-                                        <>
-                                            <p className="bg-[#F3F5FC] rounded-lg px-3 py-1">{item?.encryption_key}</p>
-                                            <IoIosEye className="cursor-pointer text-3xl mx-2"
-                                                onClick={() => {
-                                                    toggleEye(idx)
-                                                }} />
-                                        </>
-                                        :
-                                        <>
-                                            <p className="w-[400px] bg-[#F3F5FC] rounded-lg px-3 py-1">{'*'.repeat(item?.encryption_key?.length)}</p>
-                                            <IoIosEyeOff className="cursor-pointer text-3xl mx-2"
-                                                onClick={() => {
-                                                    toggleEye(idx)
-                                                }}
-                                            />
-                                        </>
-                                    }
-                                </div>
-                            </td>
-
-                            <td className="py-3">
-                                <Link to={item?.file_url} className="flex justify-center">
-                                    <MdDownloadForOffline className="text-4xl" />
-                                </Link>
-                            </td>
-
-                        </tr>
-                    )
-                })}
-
-            </table>
-
+            <div className="md:hidden block">
+                <MobileFileHistory 
+                data={data}
+                iconToDisplay={iconToDisplay}
+                keyOpen={keyOpen}
+                toggleEye={toggleEye}
+                />
+            </div>
 
 
         </div>
