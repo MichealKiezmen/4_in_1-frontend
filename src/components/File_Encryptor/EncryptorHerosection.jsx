@@ -70,7 +70,7 @@ function EncryptorHerosection() {
 
   return (
     <div className="my-10 md:my-[50px] flex flex-col md:flex-row sm:px-4">
-        <div className="md:w-[50%] order-2 md:order-1">
+        <div className="md:w-[50%] order-2 md:order-1 px-3 sm:px-0">
 
         <motion.h3
         className="text-3xl italic font-bold"

@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getTokens, logUserOut, updateToken, updateUser } from '../../redux/Slices/userSlice'
 
 import logo from "../../assets/images/logo1.png"
+import logomobile from "../../assets/images/logo-mobile.png"
+import { IoMdClose } from "react-icons/io"
 
 function EncryptHeader() {
 
@@ -93,30 +95,46 @@ useEffect(() => {
 
 
   return (
-    <div className='bg-themed_teal text-white w-full h-full relative '>
-    <div className="flex justify-between flex-wrap p-4">
+    <div className='bg-white text-themed_teal md:bg-themed_teal md:text-white w-full h-full relative '>
+    <div className="flex justify-between flex-wrap px-4 py-2.5">
         <div className="ml-3 md:ml-[80px] py-4">
             <Link to="/file-encryptor">
-                <img src={logo} className="h-10" alt="logo" />
+                <img src={logomobile} className="sm:hidden block h-10" alt="logo" /> {/* MOBILE */}
+                <img src={logo} className="hidden sm:block h-10" alt="logo" />
             </Link>
         </div>
 
-        <div>
-            <button onClick={toggleMenu} className="md:hidden text-white text-3xl my-4"><MdMenu /></button>
+        <div className="relative">
+            <button onClick={toggleMenu} 
+            className={`${showMenu ? "fixed top-4 right-0 z-[11]" : "" }  
+            md:hidden bg-white p-4 text-themed_teal text-3xl `}>
+            {!showMenu ?  <MdMenu /> :  <IoMdClose  />}
+           
+            </button>
         </div>
 
-        <div className={`${showMenu ? "block" : "hidden" } sm:block fixed left-0 top-0 bg-themed_blue sm:bg-transparent z-[10] sm:relative
-         w-[75%] sm:w-auto h-full sm:h-auto py-4 sm:px-2.5`}>
-            <ul className="flex flex-col mr-5 md:mr-[90px] lg:mr-[120px] px-4 sm:py-0
-            sm:flex-row sm:text-sm space-x-3 sm:space-x-0 space-y-8 sm:space-y-0">
+        <div className={`${showMenu ? "block" : "hidden" } sm:block fixed left-0 top-0
+         bg-white text-themed_teal md:bg-themed_teal md:text-white 
+         sm:bg-transparent z-[10] sm:relative w-[85%] sm:w-auto h-full sm:h-auto pb-4 sm:px-2.5`}>
+            <ul className="flex flex-col mr-5 md:mr-[90px] lg:mr-[120px] px-4 pl-7 sm:py-4
+            sm:flex-row sm:space-x-6 space-y-8 sm:space-y-0">
+
+            <li className="md:hidden py-8">
+             <Link to="/file-encryptor">
+             <img src={logomobile} className="sm:hidden block h-10" alt="logo" /> {/* MOBILE */}
+             </Link>
+             </li>
+             <li onClick={toggleMenu}><Link to="/file-encryptor">Home</Link></li>
 
             {authTokens ?
-             <>
-             <li onClick={toggleMenu}><Link to="/file-encryptor/collections" className="px-4 py-2">Collections</Link></li>
-             <li onClick={logOut}><Link to="" className="text-themed_black bg-white px-4 py-2 rounded-md">Log out</Link></li>
+             <> 
+             <li onClick={toggleMenu}><Link to="/file-encryptor/collections">Collections</Link></li>
+             <li onClick={logOut}>
+             <Link to="" 
+             className="md:bg-white md:text-themed_teal bg-themed_teal text-white px-8 sm:px-4 py-2 rounded-md">Log out</Link></li>
              </>
             :
-            <li onClick={toggleLoginPopUp}><Link to="" className="bg-themed_black text-white px-4 py-2 rounded-md">Log in</Link></li>
+            <li onClick={toggleLoginPopUp}><Link to="" className="bg-themed_teal text-white px-8 sm:px-4 py-2 rounded-md">Log in</Link></li>
             }
 
 

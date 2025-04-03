@@ -1,16 +1,17 @@
-import { Link } from "react-router-dom"
-import { MdDownloadForOffline } from "react-icons/md"
-import { IoIosEye, IoIosEyeOff } from "react-icons/io"
 import { useState } from "react"
 import { LuFileJson2 } from "react-icons/lu"
 import { FaRegFilePdf } from "react-icons/fa"
-import { BsFiletypeTxt } from "react-icons/bs"
+import { BsFiletypeCsv } from "react-icons/bs"
 import { HiOutlineDocumentText } from "react-icons/hi"
 import { CiFileOn } from "react-icons/ci"
+import FileHistory from "./FileHistory"
+import MobileFileHistory from "./MobileFileHistory"
 
 function PastActions({data, value}) {
 
     const [keyOpen, setKeyOpen] = useState(Array.from(data, () => false))
+    const [copied, setCopied] = useState(Array.from(data, () => false))
+
 
     function toggleEye(idx) {
         const keysList = [...keyOpen]
@@ -18,14 +19,28 @@ function PastActions({data, value}) {
         setKeyOpen(keysList)
     }
 
-    function iconToDisplay(extension){
 
+    async function copyToClipboard(text, index){
+        const x = [...copied]
+        x[index] = true
+        setCopied(x)
+
+        await navigator.clipboard.writeText(text)
+
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
+        const y = [...copied]
+        y[index] = false
+        setCopied(y)
+    }
+
+    function iconToDisplay(extension){
         if(extension === "json"){
             return <div className="py-4 mr-2 text-yellow-300"><LuFileJson2 className="text-2xl" /></div>
         }else if(extension === "pdf"){
             return <div className="py-4 mr-2 text-red-500"><FaRegFilePdf className="text-2xl" /></div>
-        }else if(extension === "txt"){
-            return <div className="py-4 mr-2 text-green-600"><BsFiletypeTxt className="text-2xl" /></div>
+        }else if(extension === "csv" || extension === "xls"){
+            return <div className="py-4 mr-2 text-green-600"><BsFiletypeCsv className="text-2xl" /></div>
         }else if(extension === "docx" || extension === "doc"){
             return <div className="py-4 mr-2 text-blue-600"><HiOutlineDocumentText className="text-2xl" /></div>
         }else{
@@ -44,69 +59,34 @@ function PastActions({data, value}) {
 
             <div className="p-4 lg:px-20 flex flex-col justify-center  overflow-x-scroll lg:overflow-x-hidden">
             <p className="font-bold text-2xl my-5">File History</p>
-            <table>
-                <tr className="bg-themed_teal text-white">
-                    <th className="py-3">FILES</th>
-                    <th>ENCRYPTION KEY</th>
-                    <th className="pr-3">DOWNLOAD</th>
-                </tr>
 
-                {data.map((item, idx) => {
-                    return (
-                        <tr key={idx} className="">
+            <div className="hidden md:block">
+                <FileHistory 
+                data={data}
+                iconToDisplay={iconToDisplay}
+                keyOpen={keyOpen}
+                toggleEye={toggleEye}
+                copyText={copyToClipboard}
+                copied={copied}
+                />
+            </div>
 
-                            <td className="py-3">
-                            <div className="flex">
-                            {iconToDisplay(item?.file_extension)}
-                            <div className="mx-2 font-semibold">
-                            <p>{item?.file_name}</p>
-                            <p className="text-sm">{item?.file_extension}</p>
-                            </div>
-                            </div>
-
-                            </td>
-
-                            <td className="py-3">
-                                <div className="flex mx-12">
-                                    {keyOpen[idx] ?
-                                        <>
-                                            <p className="bg-[#F3F5FC] rounded-lg px-3 py-1">{item?.encryption_key}</p>
-                                            <IoIosEye className="cursor-pointer text-3xl mx-2"
-                                                onClick={() => {
-                                                    toggleEye(idx)
-                                                }} />
-                                        </>
-                                        :
-                                        <>
-                                            <p className="w-[400px] bg-[#F3F5FC] rounded-lg px-3 py-1">{'*'.repeat(item?.encryption_key?.length)}</p>
-                                            <IoIosEyeOff className="cursor-pointer text-3xl mx-2"
-                                                onClick={() => {
-                                                    toggleEye(idx)
-                                                }}
-                                            />
-                                        </>
-                                    }
-                                </div>
-                            </td>
-
-                            <td className="py-3">
-                                <Link to={item?.file_url} className="flex justify-center">
-                                    <MdDownloadForOffline className="text-4xl" />
-                                </Link>
-                            </td>
-
-                        </tr>
-                    )
-                })}
-
-            </table>
-
+            <div className="md:hidden block">
+                <MobileFileHistory 
+                data={data}
+                iconToDisplay={iconToDisplay}
+                keyOpen={keyOpen}
+                toggleEye={toggleEye}
+                copyText={copyToClipboard}
+                copied={copied}
+                />
+            </div>
 
 
         </div>
 
         :
-        <div className="text-center">
+        <div className="text-center p-3">
         {value.length > 0 && data.length === 0 ?
         <div>
         <h3 className="font-bold text-2xl">No Search Results</h3>
