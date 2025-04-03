@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { LuFileJson2 } from "react-icons/lu"
 import { FaRegFilePdf } from "react-icons/fa"
-import { BsFiletypeTxt } from "react-icons/bs"
+import { BsFiletypeCsv } from "react-icons/bs"
 import { HiOutlineDocumentText } from "react-icons/hi"
 import { CiFileOn } from "react-icons/ci"
 import FileHistory from "./FileHistory"
@@ -10,6 +10,8 @@ import MobileFileHistory from "./MobileFileHistory"
 function PastActions({data, value}) {
 
     const [keyOpen, setKeyOpen] = useState(Array.from(data, () => false))
+    const [copied, setCopied] = useState(Array.from(data, () => false))
+
 
     function toggleEye(idx) {
         const keysList = [...keyOpen]
@@ -17,14 +19,28 @@ function PastActions({data, value}) {
         setKeyOpen(keysList)
     }
 
-    function iconToDisplay(extension){
 
+    async function copyToClipboard(text, index){
+        const x = [...copied]
+        x[index] = true
+        setCopied(x)
+
+        await navigator.clipboard.writeText(text)
+
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
+        const y = [...copied]
+        y[index] = false
+        setCopied(y)
+    }
+
+    function iconToDisplay(extension){
         if(extension === "json"){
             return <div className="py-4 mr-2 text-yellow-300"><LuFileJson2 className="text-2xl" /></div>
         }else if(extension === "pdf"){
             return <div className="py-4 mr-2 text-red-500"><FaRegFilePdf className="text-2xl" /></div>
-        }else if(extension === "txt"){
-            return <div className="py-4 mr-2 text-green-600"><BsFiletypeTxt className="text-2xl" /></div>
+        }else if(extension === "csv" || extension === "xls"){
+            return <div className="py-4 mr-2 text-green-600"><BsFiletypeCsv className="text-2xl" /></div>
         }else if(extension === "docx" || extension === "doc"){
             return <div className="py-4 mr-2 text-blue-600"><HiOutlineDocumentText className="text-2xl" /></div>
         }else{
@@ -50,6 +66,8 @@ function PastActions({data, value}) {
                 iconToDisplay={iconToDisplay}
                 keyOpen={keyOpen}
                 toggleEye={toggleEye}
+                copyText={copyToClipboard}
+                copied={copied}
                 />
             </div>
 
@@ -59,6 +77,8 @@ function PastActions({data, value}) {
                 iconToDisplay={iconToDisplay}
                 keyOpen={keyOpen}
                 toggleEye={toggleEye}
+                copyText={copyToClipboard}
+                copied={copied}
                 />
             </div>
 
@@ -66,7 +86,7 @@ function PastActions({data, value}) {
         </div>
 
         :
-        <div className="text-center">
+        <div className="text-center p-3">
         {value.length > 0 && data.length === 0 ?
         <div>
         <h3 className="font-bold text-2xl">No Search Results</h3>

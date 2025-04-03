@@ -1,17 +1,16 @@
 import { useState } from "react"
-import { FaLongArrowAltRight } from "react-icons/fa"
-import { IoDocumentsSharp } from "react-icons/io5"
+import { BiSolidFile } from "react-icons/bi";
 import { makePostRequests, SERVER_URL } from "../../../reusables/API_requests"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { getTokens, getUserData } from "../../../redux/Slices/userSlice"
+import filebox from "../../../assets/images/fancy-file.png"
 
 function Encrypt() {
   const userID = useSelector(getUserData)
   const token = useSelector(getTokens)
   const [selectedFile, setSelectedFile] = useState("")
   const [fileExtension, setFileExtension] = useState("pdf")
-  const [fileType, setFileType] = useState("")
   const [fileName, setFileName] = useState("")
   const [serverData, setServerData]  = useState(null)
   const [loading, setLoading] = useState(false)
@@ -32,9 +31,6 @@ function Encrypt() {
     setSelectedFile(fileProcessed)
     const file_name = fileProcessed?.name
     setFileName(file_name)
-    const reversed_extensionType = file_name && file_name.split("").reverse().join("").split(".")[0]
-    const extensionType = reversed_extensionType && reversed_extensionType.split("").reverse().join("")
-    setFileType(extensionType)
   }
 
   const handleEncryption = async (e) => {
@@ -58,31 +54,41 @@ function Encrypt() {
 
 
   return (
-    <div className="p-3 text-themed_blue ">
+    <div className="p-3 text-themed_teal">
       <h3 className="text-xl sm:text-4xl text-center font-bold my-4">Encryption Mode</h3>
 
       <form onSubmit={handleEncryption} encType="multipart/form-data">
-        <div className="flex justify-between items-center px-2.5 sm:px-4 my-10">
+        <div className="flex justify-center items-center sm:px-4 mt-12 space-x-8">
           <div>
             <label htmlFor="file-type" className="cursor-pointer">
-              <p className="text-sm text-center font-bold mb-2">Select file</p>
-              <div className="relative">
-                <IoDocumentsSharp className="text-6xl sm:text-8xl lg:text-[180px]" />
-                <p className="absolute z-[2] bottom-2 left-[11%] text-white
-          font-bold md:text-2xl">{fileType?.toUpperCase()}</p>
+              <div className="">
+                <BiSolidFile className="text-themed_teal text-8xl lg:text-[180px]" />
               </div>
-              <p>{fileName}</p>
+
+              <div className="text-sm text-center font-bold mb-2">
+              {fileName ? 
+                <p>{fileName}</p>
+                :
+                <p>Select file</p>
+              }
+              </div>
+
+              
             </label>
             <input type="file" onChange={handleFileChange}
              className="hidden" id="file-type" />
           </div>
 
           <div>
+            <img src={filebox} alt="fancybox" className="" />
+          </div>
+
+          <div>
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="file-extension" className="text-sm text-center font-bold sm:mb-2 cursor-pointer">
                 Select Mode</label>
-              <select className="cursor-pointer p-1 sm:px-5 text-white bg-themed_blue font-semibold
-        border-2 rounded-xl shadow-md"
+              <select className="cursor-pointer p-1 px-5 lg:px-8 text-black border-themed_teal font-semibold
+        border-[0.5px] rounded-sm shadow-md"
                 onChange={handleChange} value={fileExtension}
                 name="file-extension" id="file-extension">
                 <option value="pdf">.pdf</option>
@@ -91,12 +97,14 @@ function Encrypt() {
                 <option value="doc">.doc</option>
               </select>
             </div>
-            <FaLongArrowAltRight className="mx-auto text-4xl lg:text-[100px]" />
           </div>
 
-          <div className="flex justify-center">
-            <button className="py-1 px-2.5 sm:py-2 lg:py-3 sm:px-4 lg:px-8 text-white bg-themed_blue font-semibold
-             border-[0.5px] sm:border-2 rounded-2xl shadow-md shadow-themed_blue hover:shadow-lg">
+      </div>
+
+        <p className="text-center text-red-500">{error}</p>
+        <div className="flex justify-center mt-5">
+            <button className="py-1 lg:py-2 px-10 text-white bg-themed_teal font-semibold
+             rounded-md shadow-md hover:shadow-lg">
 
               {loading ?
              <div className="flex justify-center w-20">
@@ -107,13 +115,9 @@ function Encrypt() {
              }
             </button>
           </div>
-
-        </div>
-
-        <p className="text-center text-red-500">{error}</p>
       </form>
 
-      <div className="text-themed_black pt-10">
+      <div className="text-center text-themed_teal mt-8">
       {serverData ?
       <div>
         <p>Your file was successfully encrypted with key:
@@ -123,7 +127,7 @@ function Encrypt() {
         </p>
       </div>
       :
-      <p><b>MODE:</b>Which means in what file format do you want your encrypted file.</p>
+      <p><b>MODE:</b> Which means in what file format do you want your encrypted file.</p>
       }
 
       </div>
