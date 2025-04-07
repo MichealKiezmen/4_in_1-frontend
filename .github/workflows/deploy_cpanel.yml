@@ -40,15 +40,5 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/
-        server-dir: .
+        server-dir: ./
         dangerous-clean-slate: false
-    # - name: Deploy to Safe Encrypt
-    #   env:
-    #     FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-    #     FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-    #     FTP_HOST: ${{ secrets.FTP_HOST }}
-    #     REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
-    #   run: |
-    #     echo "Starting FTPS deployment..."
-    #     echo "Connecting to $FTP_HOST..."
-    #     lftp -d -c "set ssl:verify-certificate no; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; mirror -R dist $REMOTE_DIR" || echo "FTPS deployment failed with exit code $?"
