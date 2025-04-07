@@ -1,4 +1,4 @@
-name: Deploy to CPanel
+name: Deploy to CPanel via SFTP
 
 on:
   push:
@@ -27,19 +27,15 @@ jobs:
         VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
       run: |
         npm run build
-  # export NODE_OPTIONS="--max-old-space-size=4096"
-  # CI=false npm run build
 
-    - name: Install lftp
-      run: sudo apt-get install lftp
-
-    - name: Deploy to Safe Encrypt
-      env:
-        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        FTP_HOST: ${{ secrets.FTP_HOST }}
-        REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
-      run: |
-        lftp -c "set ftp:ssl-allow no; set ssl:verify-certificate no; open -u \"$FTP_USERNAME\",\"$FTP_PASSWORD\" $FTP_HOST; mirror -R dist $REMOTE_DIR"
-      # run: |
-      #   lftp -c "set ssl:verify-certificate no; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; mirror -R dist $REMOTE_DIR"
+    - name: Deploy to CPanel via SFTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./dist/
+        server-dir: ${{ secrets.REMOTE_DIR }}
+        protocol: sftp
+        port: 22 # Default SFTP port, change if your host uses a different port
+        timeout: 60000 # Increased timeout (60 seconds)
