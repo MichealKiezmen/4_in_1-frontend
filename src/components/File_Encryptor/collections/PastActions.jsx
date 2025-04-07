@@ -6,9 +6,15 @@ import { HiOutlineDocumentText } from "react-icons/hi"
 import { CiFileOn } from "react-icons/ci"
 import FileHistory from "./FileHistory"
 import MobileFileHistory from "./MobileFileHistory"
+import { useDispatch, useSelector } from "react-redux"
+import { getTokens } from "../../../redux/Slices/userSlice"
+import { makeDeleteRequests, SERVER_URL } from "../../../reusables/API_requests"
+import { toast } from "react-toastify"
+import { refreshPage } from "../../../redux/Slices/sharedSlice"
 
 function PastActions({data, value}) {
-
+    const dispatch = useDispatch()
+    const token = useSelector(getTokens)
     const [keyOpen, setKeyOpen] = useState(Array.from(data, () => false))
     const [copied, setCopied] = useState(Array.from(data, () => false))
 
@@ -17,6 +23,27 @@ function PastActions({data, value}) {
         const keysList = [...keyOpen]
         keysList[idx] = !keysList[idx]
         setKeyOpen(keysList)
+    }
+
+    async function deleteFile(id, index){
+
+        const x = [...copied]
+        x[index] = true
+        setCopied(x)
+
+
+        const response = await makeDeleteRequests(`${SERVER_URL}/api/encrypt/actions/${id}/`,token?.access_token,true)
+        if(response?.message){
+            toast.success(response?.message)
+        }
+
+        dispatch(refreshPage())
+
+        await new Promise(resolve => setTimeout(resolve, 500))
+
+        const y = [...copied]
+        y[index] = false
+        setCopied(y)
     }
 
 
@@ -51,8 +78,6 @@ function PastActions({data, value}) {
 
 
 
-
-
     return (
         <div className="text-themed_teal bg-white py-20">
         {data.length > 0 ?
@@ -61,24 +86,26 @@ function PastActions({data, value}) {
             <p className="font-bold text-2xl my-5">File History</p>
 
             <div className="hidden md:block">
-                <FileHistory 
+                <FileHistory
                 data={data}
                 iconToDisplay={iconToDisplay}
                 keyOpen={keyOpen}
                 toggleEye={toggleEye}
                 copyText={copyToClipboard}
                 copied={copied}
+                handleDelete={deleteFile}
                 />
             </div>
 
             <div className="md:hidden block">
-                <MobileFileHistory 
+                <MobileFileHistory
                 data={data}
                 iconToDisplay={iconToDisplay}
                 keyOpen={keyOpen}
                 toggleEye={toggleEye}
                 copyText={copyToClipboard}
                 copied={copied}
+                handleDelete={deleteFile}
                 />
             </div>
 

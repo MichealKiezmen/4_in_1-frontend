@@ -18,12 +18,14 @@ function Decrypt() {
 
   const handleChange = (e) => {
     setError("")
+    setServerData(null)
     const key = e.target.value
     setInputKey(key)
   }
 
   const handleFileChange = (e) => {
     setError("")
+    setServerData(null)
     const fileProcessed = e.target.files[0]
     setSelectedFile(fileProcessed)
     const file_name = fileProcessed?.name
@@ -46,6 +48,8 @@ function Decrypt() {
     const response = await makePostRequests(`${SERVER_URL}/api/decrypt/`,token?.access_token, formData,true)
     if(response?.file_url){
       setServerData(response)
+    }else{
+      setError(response?.error)
     }
     setLoading(false)
   }
@@ -66,13 +70,13 @@ function Decrypt() {
               </div>
 
               <div className="text-sm text-center font-bold mb-2">
-              {fileName ? 
+              {fileName ?
                 <p>{fileName}</p>
                 :
                 <p>Select file</p>
               }
               </div>
-              
+
             </label>
             <input type="file" onChange={handleFileChange}
             className="hidden" id="file-type" />
@@ -110,7 +114,7 @@ function Decrypt() {
       </form>
 
 
-      <div className="text-center text-themed_teal mt-8">
+      <div className="text-center text-themed_teal mt-4">
       {serverData ?
       <div>
         <p>Your file was successfully decrypted:

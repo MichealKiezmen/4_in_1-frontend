@@ -21,12 +21,14 @@ function Encrypt() {
 
   const handleChange = (e) => {
     setError("")
+    setServerData(null)
     const { value } = e.target
     setFileExtension(value)
   }
 
   const handleFileChange = (e) => {
     setError("")
+    setServerData(null)
     const fileProcessed = e.target.files[0]
     setSelectedFile(fileProcessed)
     const file_name = fileProcessed?.name
@@ -35,6 +37,8 @@ function Encrypt() {
 
   const handleEncryption = async (e) => {
     e.preventDefault()
+    setError("")
+
     if(!selectedFile || !fileExtension) {
       setError("Please select a file.")
       return
@@ -45,9 +49,12 @@ function Encrypt() {
     formData.append("document", selectedFile)
     formData.append("file_extension", fileExtension)
 
-    const response = await makePostRequests(`${SERVER_URL}/api/encrypt/${userID?.id}/`,token?.access_token, formData,true)
+    const response = await makePostRequests(`${SERVER_URL}/api/encrypt/${userID?.id || 0}/`,token?.access_token, formData,true)
+
     if(response?.file_url){
       setServerData(response)
+    }else{
+      setError(response?.error)
     }
     setLoading(false)
   }
@@ -58,7 +65,7 @@ function Encrypt() {
       <h3 className="text-xl sm:text-4xl text-center font-bold my-4">Encryption Mode</h3>
 
       <form onSubmit={handleEncryption} encType="multipart/form-data">
-        <div className="flex justify-center items-center sm:px-4 mt-12 space-x-8">
+        <div className="flex justify-center items-center sm:px-4 mt-8 space-x-8">
           <div>
             <label htmlFor="file-type" className="cursor-pointer">
               <div className="">
@@ -66,14 +73,14 @@ function Encrypt() {
               </div>
 
               <div className="text-sm text-center font-bold mb-2">
-              {fileName ? 
+              {fileName ?
                 <p>{fileName}</p>
                 :
                 <p>Select file</p>
               }
               </div>
 
-              
+
             </label>
             <input type="file" onChange={handleFileChange}
              className="hidden" id="file-type" />
@@ -117,11 +124,15 @@ function Encrypt() {
           </div>
       </form>
 
-      <div className="text-center text-themed_teal mt-8">
+      <div className="text-center text-themed_teal mt-5">
       {serverData ?
-      <div>
-        <p>Your file was successfully encrypted with key:
-         <span className="font-bold text-themed_blue m-2">{serverData?.encryption_key}</span>.
+      <div className="px-2 ">
+        <p className="">Your file was successfully encrypted with key:
+        <br />
+         <span className="max-w-full break-all whitespace-normal
+          font-bold text-themed_blue m-2">
+         {serverData?.encryption_key}
+         </span>.
          <br />
           Download the file <Link className="text-purple-600 underline italic" to={serverData?.file_url}>here</Link>
         </p>

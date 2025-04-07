@@ -5,12 +5,14 @@ import { makeGetRequests, makePostRequests, SERVER_URL } from "../../reusables/A
 import { useDispatch, useSelector } from "react-redux"
 import { getUserData, getTokens, updateToken, logUserOut } from "../../redux/Slices/userSlice"
 import { useNavigate } from "react-router-dom"
+import { pageRefreshed } from "../../redux/Slices/sharedSlice"
 
 function EncryptCollection() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [inputValue, setInputValue] = useState("")
     const [filteredData, setFilteredData] = useState([])
+    const isPageRefreshed = useSelector(pageRefreshed)
 
     const loggedInUser = useSelector(getUserData)
     const authTokens = useSelector(getTokens)
@@ -62,7 +64,8 @@ useEffect(() => {
         fetchData()
     }
 
-},[inputValue])
+    //eslint-disable-next-line
+},[inputValue, isPageRefreshed])
 
 
   return (
