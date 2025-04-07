@@ -53,6 +53,8 @@ function Encrypt() {
   }
 
 
+  console.log(serverData?.encryption_key)
+
   return (
     <div className="p-3 text-themed_teal">
       <h3 className="text-xl sm:text-4xl text-center font-bold my-4">Encryption Mode</h3>
