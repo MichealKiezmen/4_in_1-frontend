@@ -91,7 +91,7 @@ function FileHistory({data, iconToDisplay, keyOpen, toggleEye, copyText, copied,
                     handleDelete(item?.file_id, idx)
                 }}>
                 <MdDelete
-                className="text-2xl" />
+                className="text-red-500 text-2xl" />
                 </button>
             </td>
 

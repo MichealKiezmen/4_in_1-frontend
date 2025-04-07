@@ -105,8 +105,7 @@ function EncryptorHerosection() {
             </div>
         </div>
 
-      <div className="flex justify-center items-center mb-10 md:w-[50%] order-1 md:order-2">
-        {/* Image carousel */}
+      <div className="hidden md:flex justify-center items-center mb-10 md:w-[50%] order-1 md:order-2">
 
     <div className="">
         <div className="h-[250px] w-[250px] lg:h-[350px] lg:w-[350px] p-1 bg-white rounded-full">

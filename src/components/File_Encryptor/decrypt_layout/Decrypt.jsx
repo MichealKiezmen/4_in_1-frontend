@@ -57,26 +57,25 @@ function Decrypt() {
 
   return (
     <div className="p-3 text-themed_teal">
-      <h3 className="text-xl sm:text-4xl text-center font-bold my-4">Decryption Mode</h3>
+      <h3 className="text-xl sm:text-4xl text-center font-bold my-4 mb-[80px]">Decryption Mode</h3>
 
       <form onSubmit={handleEncryption} encType="multipart/form-data">
 
-        <div className="flex justify-center items-center px-2.5 sm:px-4 mt-5">
+        <div className="flex justify-center items-center px-2.5 sm:px-4">
 
           <div className="flex flex-col">
             <label htmlFor="file-type" className="cursor-pointer">
-              <div className="">
-                <BiSolidFile className="text-themed_teal text-8xl lg:text-[180px]" />
-              </div>
+              <div className="flex flex-col items-center">
+                <BiSolidFile className="text-themed_teal text-[180px]" />
 
-              <div className="text-sm text-center font-bold mb-2">
+                <div className="text-center font-bold mb-2">
               {fileName ?
-                <p>{fileName}</p>
+                <p className="">{fileName}</p>
                 :
                 <p>Select file</p>
               }
               </div>
-
+              </div>
             </label>
             <input type="file" onChange={handleFileChange}
             className="hidden" id="file-type" />
@@ -100,14 +99,14 @@ function Decrypt() {
         <p className="text-center text-red-500">{error}</p>
         <div className="flex justify-center mt-10">
             <button className="py-1 lg:py-2 px-10 text-white bg-themed_teal font-semibold
-             rounded-md shadow-md hover:shadow-lg">
+             rounded-md shadow-md hover:shadow-lg h-[40px]">
 
               {loading ?
              <div className="flex justify-center w-20">
               <div className="animate-spin h-4 w-4 rounded-full border-t-4 text-white" />
              </div>
              :
-             "Decrypt"
+             <p className="w-20">Decrypt</p>
              }
             </button>
           </div>

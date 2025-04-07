@@ -42,7 +42,7 @@ function EncryptorHow() {
         </div>
            <p className="text-sm italic font-semibold mt-2 mb-4">Encrypting Files is Simple and Secure</p>
 
-            <div className="mt-4 px-3 space-y-2 text-[#828284] font-light">
+            <div className="mt-4 mb-[70px] sm:my-4 px-3 space-y-2 text-[#828284] font-light">
             <p><b>1.</b> Click &quot;Select File&quot;. The app supports pdfs, document files, and images.</p>
             <p><b>2.</b> Select the file type you want you encrypted file back in.</p>
             <p><b>3.</b> Click the &quot;Encrypt&quot; button and watch as your files transform into secure, encrypted versions that only you can access.</p>
@@ -68,7 +68,7 @@ function EncryptorHow() {
         </div>
 
            <p className="text-sm italic font-semibold mt-2 mb-4">Access Your Protected Files When You Need Them</p>
-            <div className="my-4 px-3 space-y-2 text-[#828284] font-light">
+            <div className="mt-4 mb-[70px] sm:my-4 px-3 space-y-2 text-[#828284] font-light">
             <p><b>1.</b> Upload the encrypted file you want to access</p>
             <p><b>2.</b> Provide the key you got during encryption. Without the correct key, the file remains securely locked.</p>
             <p><b>3.</b> Click &quot;Decrypt&quot; and in seconds, your file is restored to its original form, ready for you to use.</p>
