@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom"
-import { MdDownloadForOffline } from "react-icons/md"
+import { MdDownloadForOffline, MdDelete } from "react-icons/md"
 import { IoIosEye, IoIosEyeOff} from "react-icons/io"
 import { IoCopyOutline} from "react-icons/io5"
 import { CiCircleCheck } from "react-icons/ci";
 
-function FileHistory({data, iconToDisplay, keyOpen, toggleEye, copyText, copied}) {
+
+function FileHistory({data, iconToDisplay, keyOpen, toggleEye, copyText, copied, handleDelete}) {
+
+
   return (
     <table className="w-full">
     <thead>
@@ -36,19 +39,19 @@ function FileHistory({data, iconToDisplay, keyOpen, toggleEye, copyText, copied}
                     {keyOpen[idx] ?
                         <>
                             {!copied[idx] ?
-                                <IoCopyOutline 
+                                <IoCopyOutline
                                 onClick={() => {
                                  copyText(item?.encryption_key, idx)
                                 }}
                                 disabled={copied[idx]}
-                                className={`cursor-pointer ${copied[idx] && "opacity-25"} text-2xl my-auto mx-2`} 
+                                className={`cursor-pointer ${copied[idx] && "opacity-25"} text-2xl my-auto mx-2`}
                                 />
                                 :
-                                <CiCircleCheck 
-                                className={`text-2xl my-auto mx-2`} 
+                                <CiCircleCheck
+                                className={`text-2xl my-auto mx-2`}
                                 />
                             }
-                            <p 
+                            <p
                             title="Click to copy key"
                             onClick={() => {
                                 copyText(item?.encryption_key, idx)
@@ -80,7 +83,20 @@ function FileHistory({data, iconToDisplay, keyOpen, toggleEye, copyText, copied}
                 </Link>
             </td>
 
+            <td>
+                <button
+                disabled={copied[idx]}
+                className={`${copied[idx] && "opacity-25"} my-auto`}
+                onClick={() => {
+                    handleDelete(item?.file_id, idx)
+                }}>
+                <MdDelete
+                className="text-2xl" />
+                </button>
+            </td>
+
             </tr>
+
             </tbody>
         )
     })}

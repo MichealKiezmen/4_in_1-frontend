@@ -3,6 +3,7 @@ import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from 'redux-persist/lib/storage';
 
 import userReducer from "./Slices/userSlice";
+import sharedReducer from "./Slices/sharedSlice"
 
 const persistConfig = {
     key: "root",
@@ -13,7 +14,8 @@ const persistedReducer = persistReducer(persistConfig, userReducer)
 
 const store = configureStore({
     reducer: {
-        persistedReducer
+        persistedReducer,
+        shared: sharedReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
