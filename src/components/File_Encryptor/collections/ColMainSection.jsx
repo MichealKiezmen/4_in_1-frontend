@@ -6,9 +6,9 @@ function ColMainSection({searchValue, handleChange}) {
 
 
   return (
-    <div className="relative pt-8 pb-20 flex flex-col md:flex-row ml-5 md:ml-[80px]">
+    <div className="relative pt-8 pb-20 flex flex-col md:flex-row ml-5 md:ml-[70px]">
         <div className="w-full md:w-2/4 px-5 my-8">
-            <h3 className="text-3xl md:mt-10"> Encryption History</h3>
+            <h3 className="font-bold text-3xl md:mt-10"> Encryption History</h3>
 
             <p className="my-5">Track, manage, and access all your encrypted files from one secure location.</p>
             <p className="text-xl">

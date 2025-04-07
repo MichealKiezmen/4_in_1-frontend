@@ -57,7 +57,7 @@ function Decrypt() {
 
   return (
     <div className="p-3 text-themed_teal">
-      <h3 className="text-xl sm:text-4xl text-center font-bold my-4 mb-[80px]">Decryption Mode</h3>
+      <h3 className="text-xl sm:text-4xl text-center font-bold my-4 mb-[80px] sm:mb-[20px]">Decryption Mode</h3>
 
       <form onSubmit={handleEncryption} encType="multipart/form-data">
 

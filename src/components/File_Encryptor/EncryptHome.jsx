@@ -75,7 +75,7 @@ function EncryptHome() {
 
   return (
     <div className='bg-themed_teal text-white w-full h-full relative font-dmsans'>
-    <div className='ml-5 md:ml-[80px] py-4 md:h-[70vh] lg:h-[65vh]'>
+    <div className='ml-5 md:ml-[80px] py-4 md:h-[70vh]'>
     <EncryptorHerosection />
     </div>
     <EncryptorHow />
