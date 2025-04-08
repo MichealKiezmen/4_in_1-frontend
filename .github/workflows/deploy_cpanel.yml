@@ -33,7 +33,7 @@ jobs:
     - name: Install lftp
       run: sudo apt-get install lftp
 
-    - name: FTP Deploy
+    - name: FTP Deploy To CPanel
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_HOST }}

@@ -113,7 +113,7 @@ function PastActions({data, value}) {
         </div>
 
         :
-        <div className="text-center p-3">
+        <div className="text-center p-3 my-7">
         {value.length > 0 && data.length === 0 ?
         <div>
         <h3 className="font-bold text-2xl">No Search Results</h3>

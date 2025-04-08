@@ -3,12 +3,31 @@ import { MdDownloadForOffline, MdDelete } from "react-icons/md"
 import { IoIosEye, IoIosEyeOff} from "react-icons/io"
 import { IoCopyOutline} from "react-icons/io5"
 import { CiCircleCheck } from "react-icons/ci";
+import { useState } from "react";
+import DeletePopUp from "../../../layout/DeletePopUp";
 
 
 function FileHistory({data, iconToDisplay, keyOpen, toggleEye, copyText, copied, handleDelete}) {
 
+ const [showDelPopUp, setShowDelPopUp] = useState(false)
+ const [deletionData, setDeletionData] = useState(null)
+
+ function deleteConfirmed() {
+    handleDelete(deletionData?.fileID,deletionData?.index)
+ }
+
+ function showPopUp(fileID, index, fileName){
+    setShowDelPopUp(true)
+    setDeletionData({fileID, index, fileName})
+ }
+
+ function closePopUp(){
+    setShowDelPopUp(false)
+    setDeletionData(null)
+ }
 
   return (
+    <>
     <table className="w-full">
     <thead>
     <tr className="bg-themed_teal text-white">
@@ -88,7 +107,7 @@ function FileHistory({data, iconToDisplay, keyOpen, toggleEye, copyText, copied,
                 disabled={copied[idx]}
                 className={`${copied[idx] && "opacity-25"} my-auto`}
                 onClick={() => {
-                    handleDelete(item?.file_id, idx)
+                    showPopUp(item?.file_id, idx, item?.file_name)
                 }}>
                 <MdDelete
                 className="text-red-500 text-2xl" />
@@ -96,12 +115,19 @@ function FileHistory({data, iconToDisplay, keyOpen, toggleEye, copyText, copied,
             </td>
 
             </tr>
-
             </tbody>
         )
     })}
 
 </table>
+        {showDelPopUp &&
+        <DeletePopUp
+            fileName={deletionData?.fileName}
+            closePopUp={closePopUp}
+            performDelete={deleteConfirmed}
+        />
+}
+</>
   )
 }
 

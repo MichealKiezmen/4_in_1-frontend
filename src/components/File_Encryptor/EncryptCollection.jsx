@@ -69,7 +69,7 @@ useEffect(() => {
 
 
   return (
-    <div className={`h-screen bg-themed_teal text-white`}>
+    <div className={` bg-themed_teal text-white`}>
     <ColMainSection searchValue={inputValue} handleChange={handleChange}  />
     <PastActions data={filteredData} value={inputValue} />
     </div>

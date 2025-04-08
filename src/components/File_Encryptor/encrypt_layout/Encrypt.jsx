@@ -75,7 +75,7 @@ function Encrypt() {
 
   return (
     <div className="p-3 text-themed_teal">
-      <h3 className="text-xl sm:text-4xl text-center font-bold my-4 mb-[100px]">Encryption Mode</h3>
+      <h3 className="text-xl sm:text-4xl text-center font-bold my-4 mb-[100px] sm:mb-[60px]">Encryption Mode</h3>
 
       <form onSubmit={handleEncryption} encType="multipart/form-data">
         <div className="flex justify-between sm:justify-center  items-center sm:px-4 mt-8 space-x-8">
@@ -144,16 +144,16 @@ function Encrypt() {
       <div className="px-2 ">
         <p className="">Your file was successfully encrypted with key:
         <br />
-         <p 
+         <p
          title="click to copy"
          onClick={() => {
           copyToClipboard(serverData?.encryption_key)
          }} className="relative cursor-pointer max-w-full break-all whitespace-normal
           font-bold text-themed_blue m-2">
          {serverData?.encryption_key}
-         {copied && 
-         <span 
-         className="bg-white text-black font-light 
+         {copied &&
+         <span
+         className="bg-white text-black font-light
          border-2 px-2 absolute z-[2] top-0 right-[40%]">Text copied</span> }
          </p>
          <br />
