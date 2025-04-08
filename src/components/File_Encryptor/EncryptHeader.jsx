@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { MdMenu } from "react-icons/md"
-import { Link, Outlet, useNavigate } from "react-router-dom"
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
 import PopUp from '../../layout/PopUp'
 import { FcGoogle } from 'react-icons/fc'
 import { useGoogleLogin } from '@react-oauth/google'
@@ -12,11 +12,17 @@ import { getTokens, logUserOut, updateToken, updateUser } from '../../redux/Slic
 import logo from "../../assets/images/logo1.png"
 import logomobile from "../../assets/images/logo-mobile.png"
 import { IoMdClose } from "react-icons/io"
+import EncryptFooter from "./EncryptFooter"
 
 function EncryptHeader() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const location = useLocation()
+    const url = location?.pathname
+
+    
 
 
     const authTokens = useSelector(getTokens)
@@ -51,6 +57,7 @@ function EncryptHeader() {
         const result2 = await dispatch(updateUser(userDate?.data))
         if(result2?.payload?.username){
             toggleLoginPopUp()
+            setLoading(false)
             navigate("/file-encryptor/collections")
         }
     }
@@ -71,7 +78,7 @@ function EncryptHeader() {
                     profile_picture: picture
                 }
                 registerUser(body)
-                setLoading(false)
+                
             })
             .catch((err) => {
                 console.error("ERROR",err)
@@ -124,11 +131,11 @@ useEffect(() => {
              <img src={logomobile} className="sm:hidden block h-10" alt="logo" /> {/* MOBILE */}
              </Link>
              </li>
-             <li onClick={toggleMenu}><Link to="/file-encryptor">Home</Link></li>
+             <li onClick={toggleMenu} className={`${url === "/file-encryptor" && "font-bold"}`}><Link to="/file-encryptor">Home</Link></li>
 
             {authTokens ?
              <> 
-             <li onClick={toggleMenu}><Link to="/file-encryptor/collections">Collections</Link></li>
+             <li onClick={toggleMenu} className={`${url === "/file-encryptor/collections" && "font-bold"}`}><Link to="/file-encryptor/collections">Collections</Link></li>
              <li onClick={logOut}>
              <Link to="" 
              className="md:bg-white md:text-themed_teal bg-themed_teal text-white px-8 sm:px-4 py-2 rounded-md">Log out</Link></li>
@@ -143,6 +150,7 @@ useEffect(() => {
 
     </div>
     <Outlet />
+    <EncryptFooter />
 
         {loginShow &&
         <PopUp closePopUp={toggleLoginPopUp}>

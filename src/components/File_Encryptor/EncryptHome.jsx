@@ -33,6 +33,7 @@ function EncryptHome() {
         const result2 = await dispatch(updateUser(userDate?.data))
         if(result2?.payload?.username){
             toggleLoginPopUp()
+            setLoading(false)
             navigate("/file-encryptor/collections")
         }
     }
