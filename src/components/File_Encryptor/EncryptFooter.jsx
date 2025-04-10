@@ -17,15 +17,19 @@ function EncryptFooter() {
 
     const handleFeedback = async (e) => {
         e.preventDefault()
-        const url = `${SERVER_URL}/api/login/`
-        const response = await makePostRequests(url, null, {message : value})
+        const url = `${SERVER_URL}/api/feedback/`
+        const response = await makePostRequests(url, authTokens?.access_token, {message : value})
         if(response?.success){
             toast.success("Feedback sent.")
             setValue("")
         }else{
-            toast.error("Message not sent.")
+          if(!authTokens){
+            toast.error("Message not sent. Sign in to send feedback.")
+            return
+          }
+          toast.error("Message not sent.")
         }
-        
+
     }
 
 
@@ -39,17 +43,18 @@ function EncryptFooter() {
             {authTokens &&
               <li className={`${url === "/file-encryptor/collections" && "font-bold"}`}><Link to="/file-encryptor/collections">Collections</Link></li>
             }
-            
+
         </ul>
       </div>
       </div>
+
 
       <div className="sm:w-1/4 mt-5 sm:mt-0">
         <form onSubmit={handleFeedback}>
         <p>Send Feedback</p>
         <div className="relative w-3/4 sm:w-full mt-2">
             <input type="text" placeholder="Enter message"
-            value={value} 
+            value={value}
             onChange={(e) => {
                 setValue(e.target.value)
             }}
